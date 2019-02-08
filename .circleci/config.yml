@@ -8,6 +8,7 @@ jobs:
    - image: circleci/golang:1.10
   steps:
    - run: whoami;ls -la /;
+   - run: echo ${GOPATH}
    - checkout
    - setup_remote_docker
 
