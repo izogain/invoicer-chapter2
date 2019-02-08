@@ -14,6 +14,7 @@ jobs:
    - run: 
       name: Setup environment
       command: |
+       pwd
        gb="/src/github.com/${CIRCLE_PROJECT_USERNAME}";
        if [ ${CIRCLE_PROJECT_USERNAME} == 'Securing-DevOps' ]; then
          dr="securingdevops"
@@ -26,18 +27,19 @@ jobs:
        export GOPATH_BASE="$(echo ${GOPATH}|cut -d ':' -f 1)${gb}"
        export DOCKER_REPO="$dr"
        EOF
-   - run: echo ${GOPATH_BASE}; mkdir -p "${GOPATH_BASE}"
-   - run: echo ${GOPATH_HEAD}; mkdir -p "${GOPATH_HEAD}/bin"
+   - run: pwd; echo ${GOPATH_BASE}; mkdir -p "${GOPATH_BASE}"
+   - run: pwd; echo ${GOPATH_HEAD}; mkdir -p "${GOPATH_HEAD}/bin"
        
    - run:
       name: Testing application
       command: |
+          pwd
           go test \
           github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}
-          pwd
 
    - deploy:
        command: |
+         pwd
          if [ "${CIRCLE_BRANCH}" == "master" ]; then
            docker login -u ${DOCKER_USER} -p ${DOCKER_PASS};
            go install --ldflags '-extldflags "-static"' \
