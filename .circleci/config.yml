@@ -7,7 +7,7 @@ jobs:
   docker:
    - image: circleci/golang:1.10
   steps:
-   - run: whoami
+   - run: whoami;ls -la /;
    - checkout
    - setup_remote_docker
 
